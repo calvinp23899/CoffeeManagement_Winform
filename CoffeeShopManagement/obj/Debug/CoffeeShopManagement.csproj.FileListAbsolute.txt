@@ -1,0 +1,10 @@
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.csproj.AssemblyReference.cache
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.csproj.SuggestedBindingRedirects.cache
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.Properties.Resources.resources
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.csproj.GenerateResource.cache
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.csproj.CoreCompileInputs.cache
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\bin\Debug\CoffeeShopManagement.exe.config
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\bin\Debug\CoffeeShopManagement.exe
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\bin\Debug\CoffeeShopManagement.pdb
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.exe
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.pdb
