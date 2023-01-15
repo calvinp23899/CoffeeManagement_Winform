@@ -8,3 +8,4 @@ D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\bin\Debug\Coff
 D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\bin\Debug\CoffeeShopManagement.pdb
 D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.exe
 D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.pdb
+D:\.Net Project\Winform\CoffeeShopManagement\CoffeeShopManagement\obj\Debug\CoffeeShopManagement.AdminManagement.resources

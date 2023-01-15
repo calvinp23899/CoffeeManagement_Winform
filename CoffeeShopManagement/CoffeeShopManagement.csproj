@@ -87,6 +87,9 @@
     <Compile Include="TableManagement.Designer.cs">
       <DependentUpon>TableManagement.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdminManagement.resx">
+      <DependentUpon>AdminManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

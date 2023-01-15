@@ -14,15 +14,22 @@ namespace CoffeeShopManagement
 {
     public partial class AdminManagement : Form
     {
+        #region BindingSource
         BindingSource foodList = new BindingSource();
-
         BindingSource accountList = new BindingSource();
+        BindingSource tableFood = new BindingSource();
+        BindingSource categoryList = new BindingSource();
+        #endregion
 
+        #region private
         public Account loginAccount;
+        #endregion
+
         public AdminManagement()
         {
             InitializeComponent();
             LoadData();
+      
         }
 
         #region methods
@@ -35,16 +42,23 @@ namespace CoffeeShopManagement
         }
         void LoadData()
         {
+            //binding source
             dtgvFood.DataSource = foodList;
             dtgvAccount.DataSource = accountList;
-
+            dtgvTable.DataSource = tableFood;
+            dtgvCategory.DataSource = categoryList;
             LoadDateTimePickerBill();
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
             LoadListFood();
             LoadAccount();
+            LoadListTable();
+            LoadListCategory();
             LoadCategoryIntoCombobox(cbFoodCategory);
             AddFoodBinding();
             AddAccountBinding();
+            AddTableBinding();
+            AddCategoryBinding();
+
         }
 
         void AddAccountBinding()
@@ -76,6 +90,18 @@ namespace CoffeeShopManagement
             nmFoodPrice.DataBindings.Add(new Binding("Value", dtgvFood.DataSource, "Price", true, DataSourceUpdateMode.Never));
         }
 
+        void AddTableBinding()
+        {
+            txbTableID.DataBindings.Add(new Binding("Text", dtgvTable.DataSource, "ID", true, DataSourceUpdateMode.Never));
+            txbTableName.DataBindings.Add(new Binding("Text", dtgvTable.DataSource, "Name", true,DataSourceUpdateMode.Never));
+            cbTableStatus.DataBindings.Add(new Binding("Text", dtgvTable.DataSource, "Status", true, DataSourceUpdateMode.Never));
+        }
+
+        void AddCategoryBinding()
+        {
+            txbCategoryID.DataBindings.Add(new Binding("Text", dtgvCategory.DataSource, "ID", true, DataSourceUpdateMode.Never));
+            txbCategoryName.DataBindings.Add(new Binding("Text", dtgvCategory.DataSource, "Name", true, DataSourceUpdateMode.Never));
+        }
         void LoadCategoryIntoCombobox(ComboBox cb)
         {
             cb.DataSource = CategoryDAO.Instance.GetListCategory();
@@ -86,6 +112,14 @@ namespace CoffeeShopManagement
             foodList.DataSource = FoodDAO.Instance.GetListFood();
         }
 
+        void LoadListTable()
+        {
+            tableFood.DataSource = TableDAO.Instance.LoadTableList();
+        }
+        void LoadListCategory()
+        {
+            categoryList.DataSource = CategoryDAO.Instance.GetListCategory();
+        }
         void AddAccount(string userName, string displayName, int type)
         {
             if (AccountDAO.Instance.InsertAccount(userName, displayName, type))
@@ -146,7 +180,7 @@ namespace CoffeeShopManagement
         }
         #endregion
 
-        #region events
+        #region Private Method Account
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
             string userName = txbUserName.Text;
@@ -185,8 +219,9 @@ namespace CoffeeShopManagement
         {
             LoadAccount();
         }
+        #endregion
 
-
+        #region Private Method Food
         private void btnSearchFood_Click(object sender, EventArgs e)
         {
             foodList.DataSource = SearchFoodByName(txbSearchFoodName.Text);
@@ -258,6 +293,7 @@ namespace CoffeeShopManagement
             {
                 MessageBox.Show("Có lỗi khi sửa thức ăn");
             }
+            
         }
 
         private void btnDeleteFood_Click(object sender, EventArgs e)
@@ -278,37 +314,18 @@ namespace CoffeeShopManagement
         }
         private void btnShowFood_Click(object sender, EventArgs e)
         {
-            LoadListFood();
+            txbFoodID.Clear();
+            txbFoodName.Clear();
+            txbSearchFoodName.Clear();
         }
+        #endregion
 
         private void btnViewBill_Click(object sender, EventArgs e)
         {
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
         }
 
-        private event EventHandler insertFood;
-        public event EventHandler InsertFood
-        {
-            add { insertFood += value; }
-            remove { insertFood -= value; }
-        }
-
-        private event EventHandler deleteFood;
-        public event EventHandler DeleteFood
-        {
-            add { deleteFood += value; }
-            remove { deleteFood -= value; }
-        }
-
-        private event EventHandler updateFood;
-        public event EventHandler UpdateFood
-        {
-            add { updateFood += value; }
-            remove { updateFood -= value; }
-        }
-
-        #endregion              
-
+        #region Statistic  private method
         private void btnFristBillPage_Click(object sender, EventArgs e)
         {
             txbPageBill.Text = "1";
@@ -351,6 +368,7 @@ namespace CoffeeShopManagement
 
             txbPageBill.Text = page.ToString();
         }
+        #endregion
 
         private void fAdmin_Load(object sender, EventArgs e)
         {
@@ -359,5 +377,86 @@ namespace CoffeeShopManagement
 
             //this.rpViewer.RefreshReport();
         }
+
+        #region Private Table Methods
+        private void btnEditTable_Click(object sender, EventArgs e)
+        { 
+            TableDAO.Instance.UpdateTable(Int32.Parse(txbTableID.Text), txbTableName.Text, cbTableStatus.Text);
+            LoadListTable();
+        }
+
+        private void btnAddTable_Click(object sender, EventArgs e)
+        {
+            TableDAO.Instance.InsertTable(txbTableName.Text,cbTableStatus.Text);
+            LoadListTable();
+        }
+
+        private void btnDeleteTable_Click(object sender, EventArgs e)
+        {
+            TableDAO.Instance.DeleteTable(txbTableName.Text);
+            LoadListTable();
+        }
+        private void btnClearTableFood_Click(object sender, EventArgs e)
+        {
+            txbTableID.Clear();
+            txbTableName.Clear();
+        }
+        #endregion
+
+        #region EventHandler
+        private event EventHandler insertFood;
+        public event EventHandler InsertFood
+        {
+            add { insertFood += value; }
+            remove { insertFood -= value; }
+        }
+
+        private event EventHandler deleteFood;
+        public event EventHandler DeleteFood
+        {
+            add { deleteFood += value; }
+            remove { deleteFood -= value; }
+        }
+
+        private event EventHandler updateFood;
+        public event EventHandler UpdateFood
+        {
+            add { updateFood += value; }
+            remove { updateFood -= value; }
+        }
+
+
+        #endregion
+
+        #region Private Category Methods
+        private void btnEditCategory_Click(object sender, EventArgs e)
+        {
+            CategoryDAO.Instance.UpdateCategory(Int32.Parse(txbCategoryID.Text), txbCategoryName.Text);
+            LoadListCategory();
+            LoadCategoryIntoCombobox(cbFoodCategory);
+            TableManagement TableForm = new TableManagement(loginAccount);
+            TableForm.LoadCategory();
+
+        }
+
+        private void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            CategoryDAO.Instance.InsertCategory(txbCategoryName.Text);
+            LoadListCategory();
+        }
+
+        private void btnDeleteCategory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnShowCategory_Click(object sender, EventArgs e)
+        {
+            txbCategoryName.Clear();
+            txbCategoryID.Clear();
+        }
+        #endregion
+
+
     }
 }

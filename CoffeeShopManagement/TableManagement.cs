@@ -40,7 +40,7 @@ namespace CoffeeShopManagement
             adminToolStripMenuItem.Enabled = type == 1;
             thôngTinTàiKhoảnToolStripMenuItem.Text += " (" + LoginAccount.DisplayName + ")";
         }
-        void LoadCategory()
+        public void LoadCategory()
         {
             List<Category> listCategory = CategoryDAO.Instance.GetListCategory();
             cbCategory.DataSource = listCategory;
@@ -69,7 +69,7 @@ namespace CoffeeShopManagement
                 switch (item.Status)
                 {
                     case "Trống":
-                        btn.BackColor = Color.Aqua;                                    
+                        btn.BackColor = Color.Aqua;
                         break;
                     default:
                         btn.BackColor = Color.LightPink;
@@ -211,11 +211,12 @@ namespace CoffeeShopManagement
             {
                 BillDAO.Instance.InsertBill(table.ID);
                 BillInfoDAO.Instance.InsertBillInfo(BillDAO.Instance.GetMaxIDBill(), foodID, count);
+                TableDAO.Instance.UpdateStatusTable(table.ID, action1);
             }
             else
             {
                 BillInfoDAO.Instance.InsertBillInfo(idBill, foodID, count);
-                TableDAO.Instance.UpdateTable(table.ID, action1);
+                TableDAO.Instance.UpdateStatusTable(table.ID, action1);
             }
 
             ShowBill(table.ID);
@@ -238,7 +239,7 @@ namespace CoffeeShopManagement
                 {
                     BillDAO.Instance.CheckOut(idBill, discount, (float)finalTotalPrice);
                     ShowBill(table.ID);
-                    TableDAO.Instance.UpdateTable(table.ID, action);
+                    TableDAO.Instance.UpdateStatusTable(table.ID, action);
                     LoadTable();
                 }
             }
@@ -257,6 +258,6 @@ namespace CoffeeShopManagement
             }
         }
 
-        #endregion        
+        #endregion              
     }
 }

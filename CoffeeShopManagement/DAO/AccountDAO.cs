@@ -44,7 +44,24 @@ namespace QuanLyQuanCafe.DAO
 
         public bool UpdateAccount(string userName, string displayName, string pass, string newPass)
         {
-            int result = DataProvider.Instance.ExecuteNonQuery("exec USP_UpdateAccount @userName , @displayName , @password , @newPassword", new object[]{userName, displayName, pass, newPass});
+            //Check hash old Password 
+            byte[] temp = ASCIIEncoding.ASCII.GetBytes(pass);
+            byte[] hasData = new MD5CryptoServiceProvider().ComputeHash(temp);
+            string hasPass = "";
+            foreach (byte item in hasData)
+            {
+                hasPass += item;
+            }
+
+            //Hash New Password
+            byte[] newTemp = ASCIIEncoding.ASCII.GetBytes(newPass);
+            byte[] newData = new MD5CryptoServiceProvider().ComputeHash(newTemp);
+            string newPassword = "";
+            foreach (byte items in newData)
+            {
+                newPassword += items;
+            }
+            int result = DataProvider.Instance.ExecuteNonQuery("exec USP_UpdateAccount @userName , @displayName , @password , @newPassword", new object[]{userName, displayName, hasPass, newPassword});
 
             return result > 0;
         }

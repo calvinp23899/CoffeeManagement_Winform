@@ -47,16 +47,16 @@ namespace CoffeeShopManagement
             }
             else
             {
-                if (AccountDAO.Instance.UpdateAccount(userName, displayName, password, newpass))
-                {
-                    MessageBox.Show("Cập nhật thành công");
-                    if (updateAccount != null)
-                        updateAccount(this, new AccountEvent(AccountDAO.Instance.GetAccountByUserName(userName)));
-                }
-                else
-                {
-                    MessageBox.Show("Vui lòng điền đúng mật khấu");
-                }
+                AccountDAO.Instance.UpdateAccount(userName, displayName, password, newpass);
+                MessageBox.Show("Cập nhật thành công");
+                //if (updateAccount != null)
+                //{
+                //    updateAccount(this, new AccountEvent(AccountDAO.Instance.GetAccountByUserName(userName)));
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Vui lòng điền đúng mật khấu");
+                //}
             }
         }
 
